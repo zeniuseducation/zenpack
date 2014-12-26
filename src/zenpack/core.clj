@@ -5,6 +5,7 @@
             [org.httpkit.server :as web-server]
             [org.httpkit.client :as http]
             [clojure.string :as cs]
+            [selmer.parser :as selmer]
             [ring.middleware.defaults :refer :all]))
 
 (def ^:private init-files
@@ -23,6 +24,9 @@
    {:target "resources/public/includes/canvas.js"
     :source "http://ocanvas.org/source/ocanvas-2.7.3.min.js"
     :description "OCanvas for animation and games development"}
+   {:target "resources/public/includes/main-style.css"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/main-style.css"
+    :description "Basic zenius decoration colors"}
    {:target "resources/templates/base.html"
     :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/base.html"
     :description "Basic html template"}])
@@ -30,13 +34,13 @@
 (defn boot-site
   [app-name]
   (doseq [{:keys [target source]} init-files]
-    (do (make-parents target)
+    (do (io/make-parents target)
         (->> (-> (:body @(http/get source))
                  (cs/replace #"project-name" app-name))
              (spit target))
         (println "Installing " source))))
 
-(def render selmer.parser/render-file)
+(def render selmer/render-file)
 (def static-files resources)
 (def error-404 not-found)
 
