@@ -53,7 +53,7 @@ If leiningen is available, you might want to use <a href="https://github.com/zen
 14. Run-in REPL again  
 15. Reload  
 16. in REPL enter (run 3000)  
-17. Now you can navigate in your browser to localhost:3000 and your site is up and running  
+17. Now you can navigate in your browser to http://localhost:3000/ and your site is up and running  
 18. To stop the site simply enter (stop) in the REPL
 
 For further web development tutorial, there will be one we assure you...
