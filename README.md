@@ -2,7 +2,8 @@ zenpack
 =======
 
 A package of basic clojure libraries for developing basic clojure web app, this is a workaround when
-using <a href="http://Nightcode.info" target="_blank">Nightcode</a> when leiningen is unavailable.
+using <a href="http://Nightcode.info" target="_blank">Nightcode</a> when leiningen is unavailable.  
+If leiningen is available, you might want to use <a href="https://github.com/zeniuseducation/zenweb-template">Zenweb</a> instead.  
 
 ### Usage :
 
