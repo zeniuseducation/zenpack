@@ -6,8 +6,7 @@
             [org.httpkit.client :as http]
             [clojure.string :as cs]
             [selmer.parser :as selmer]
-            [ring.middleware.defaults :refer :all]
-            [ring.middleware.reload :refer [wrap-reload]]))
+            [ring.middleware.defaults :refer :all]))
 
 (def ^:private init-files
   [{:target "project.clj"
@@ -52,10 +51,9 @@
   (do (->> {:port port}
            (->> site-defaults
                 (wrap-defaults app-routes)
-                (wrap-reload)
                 (web-server/run-server))
            (reset! server))
-      (println "Web site runs from port " port)))
+      (println "Web site runs on port " port)))
 
 (defn stop
   [server]
