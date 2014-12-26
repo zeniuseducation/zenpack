@@ -6,39 +6,41 @@
             [org.httpkit.client :as http]
             [clojure.string :as cs]
             [selmer.parser :as selmer]
-            [ring.middleware.defaults :refer :all]))
+            [ring.middleware.defaults :refer :all]
+            [ring.middleware.reload :refer [wrap-reload]]))
 
 (def ^:private init-files
   [{:target "project.clj"
-    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/project.edn"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/master/resources/files/project.edn"
     :description "Project skeleton"}
    {:target "resources/public/includes/foundation.css"
-    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/foundation.css"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/master/resources/files/foundation.css"
     :description "Foundation for site decoration"}
    {:target "resources/public/includes/normalize.css"
-    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/normalize.css"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/master/resources/files/normalize.css"
     :description "Site decoration standard"}
    {:target "resources/public/includes/react.js"
-    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/react.js"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/master/resources/files/react.js"
     :description "React-js for front-end web development"}
    {:target "resources/public/includes/canvas.js"
-    :source "http://ocanvas.org/source/ocanvas-2.7.3.min.js"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/master/resources/files/canvas.js"
     :description "OCanvas for animation and games development"}
    {:target "resources/public/includes/main-style.css"
-    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/main-style.css"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/master/resources/files/main-style.css"
     :description "Basic zenius decoration colors"}
    {:target "resources/templates/base.html"
-    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/files/base.html"
+    :source "https://raw.githubusercontent.com/zeniuseducation/zenpack/master/resources/files/base.html"
     :description "Basic html template"}])
 
-(defn boot-site
+(defn init-site
   [app-name]
-  (doseq [{:keys [target source]} init-files]
-    (do (io/make-parents target)
-        (->> (-> (:body @(http/get source))
-                 (cs/replace #"project-name" app-name))
-             (spit target))
-        (println "Installing " source))))
+  (do (println "Initialising web site, this could take a few minutes")
+      (doseq [{:keys [target source description]} init-files]
+     (do (io/make-parents target)
+         (->> (-> (str (:body @(http/get source)))
+                  (cs/replace #"project-template" app-name))
+              (spit target))
+         (println "Installing " description)))))
 
 (def render selmer/render-file)
 (def static-files resources)
@@ -49,6 +51,7 @@
   (do (->> {:port port}
            (->> site-defaults
                 (wrap-defaults app-routes)
+                (wrap-reload)
                 (web-server/run-server))
            (reset! server))
       (println "Web site runs from port " port)))
