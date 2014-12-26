@@ -48,11 +48,9 @@
 
 (defn start
   [server app-routes port]
-  (do (->> {:port port}
-           (->> site-defaults
-                (wrap-defaults app-routes)
-                (web-server/run-server))
-           (reset! server))
+  (do (web-server/run-server (wrap-defaults app-routes
+                                            site-defaults)
+                             {port port})
       (println "Web site runs on port " port)))
 
 (defn stop

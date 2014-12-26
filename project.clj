@@ -1,4 +1,4 @@
-(defproject zenedu/zenpack "0.1.7"
+(defproject zenedu/zenpack "0.1.8"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [lib-noir "0.9.5"]
                  [http-kit "2.1.19"]
