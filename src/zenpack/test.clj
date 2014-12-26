@@ -8,7 +8,7 @@
   (GET "/" req
        (render "files/base.html"
                {})) 
-  (error-404 "Not found men"))
+  (error404 "Not found men"))
 
 
 (defn run
