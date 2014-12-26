@@ -36,11 +36,12 @@
   [app-name]
   (do (println "Initialising web site, this could take a few minutes")
       (doseq [{:keys [target source description]} init-files]
-     (do (io/make-parents target)
-         (->> (-> (str (:body @(http/get source)))
-                  (cs/replace #"project-template" app-name))
-              (spit target))
-         (println "Installing " description)))))
+        (do (io/make-parents target)
+            (->> (-> (str (:body @(http/get source)))
+                     (cs/replace #"project-template" app-name))
+                 (spit target))
+            (println "Installing " description)))
+      "Your website is ready for development"))
 
 (def render selmer/render-file)
 (def static-files resources)
