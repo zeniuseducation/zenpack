@@ -6,7 +6,8 @@
             [org.httpkit.client :as http]
             [clojure.string :as cs]
             [selmer.parser :as selmer]
-            [ring.middleware.defaults :refer :all]))
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.resource :refer [wrap-resource]]))
 
 (def ^:private init-files
   [{:target "project.clj"
@@ -43,19 +44,19 @@
       "Your website is ready for development"))
 
 (def render selmer/render-file)
-(def static-files resources)
-(def error-404 not-found)
+(def error404 not-found)
 
-(defn start
+(defn start-site
   [server app-routes port]
-  (do (web-server/run-server (wrap-defaults app-routes
-                                            site-defaults)
-                             {port port})
+  (do (->> (-> (wrap-resource app-routes "public")
+               (wrap-defaults site-defaults)
+               (web-server/run-server {:port port}))
+           (reset! server))
       (println "Web site runs on port " port)))
 
-(defn stop
+(defn stop-site
   [server]
-  (do (@server :timeout 200)
+  (do (@server)
       (reset! server nil)
       (println "Web site has been successfully shut-down")))
 
