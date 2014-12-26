@@ -1,0 +1,5 @@
+.lein*
+/resources/public
+.nrepl*
+/target
+/resources/selmer
