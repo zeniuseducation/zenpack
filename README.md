@@ -2,9 +2,9 @@ zenpack
 =======
 
 A package of basic clojure libraries for developing basic clojure web app, this is a workaround when
-using Nightcode.info when leiningen is unavailable.
+using http://Nightcode.info when leiningen is unavailable.
 
-#### Usage :
+### Usage :
 
 1. Open nightcode, and create a new project (you decide the name)  
 2. Choose command line app template and choose clojure as the language  
@@ -51,8 +51,9 @@ using Nightcode.info when leiningen is unavailable.
 13. Save the file  
 14. Run-in REPL again  
 15. Reload  
-16. in repl enter (run 3000)  
+16. in REPL enter (run 3000)  
 17. Now you can navigate in your browser to localhost:3000 and your site is up and running  
+18. To stop the site simply enter (stop) in the REPL
 
 For further web development tutorial, there will be one we assure you...
 
