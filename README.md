@@ -31,7 +31,8 @@ If leiningen is available, you might want to use <a href="https://github.com/zen
 
 ```clojure
 (ns [your-project-name].core
-  (:require [zenpack.core :refer :all))
+  (:require [zenpack.core :refer :all]
+            [compojure.core :refer :all]))
   
 (defonce server (atom nil))
 
