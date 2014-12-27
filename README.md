@@ -42,11 +42,11 @@ If leiningen is available, you might want to use <a href="https://github.com/zen
   
 (defn run
   [port]
-  (start server my-site port))
+  (start-site server my-site port))
   
 (defn stop
   []
-  (stop server))
+  (stop-site server))
 
 ```
 
