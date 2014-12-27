@@ -25,7 +25,7 @@ If leiningen is available, you might want to use <a href="https://github.com/zen
 7. Save your core.clj  
 8. Choose Run-in-repl in the REPL below the 'codes' part  
 9. Reload to make sure the file is loaded  
-10. run (init-site [your-project-name]) in the repl  
+10. run (init-site "[your-project-name]") in the repl  
 11. Stop the repl  
 12. Change your core.clj to   
 
